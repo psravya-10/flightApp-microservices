@@ -6,6 +6,8 @@ import com.flightapp.booking.exception.*;
 import com.flightapp.booking.repository.BookingRepository;
 import com.flightapp.booking.feign.FlightClient;
 import com.flightapp.booking.util.PnrGenerator;
+import com.flightapp.booking.service.BookingEventPublisher;
+
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
@@ -14,17 +16,21 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
 @Service
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepo;
     private final FlightClient flightClient;
+    private final BookingEventPublisher bookingEventPublisher;
 
-    public BookingServiceImpl(BookingRepository bookingRepo, FlightClient flightClient) {
+    public BookingServiceImpl(BookingRepository bookingRepo,
+                              FlightClient flightClient,
+                              BookingEventPublisher bookingEventPublisher) {
         this.bookingRepo = bookingRepo;
         this.flightClient = flightClient;
+        this.bookingEventPublisher = bookingEventPublisher;
     }
+
 
     @Override
     @CircuitBreaker(name = "flightCB", fallbackMethod = "flightServiceFallback")
@@ -59,7 +65,11 @@ public class BookingServiceImpl implements BookingService {
         b.setPassengers(list);
         Booking saved = bookingRepo.save(b);
 
+        // Publish booking confirmed event to RabbitMQ
+        bookingEventPublisher.publishBookingConfirmed(saved);
+
         return toResponse(saved, flight);
+
     }
     public TicketResponse flightServiceFallback(String flightId, BookingRequest req, Throwable ex) {
         System.out.println("CIRCUIT BREAKER TRIGGERED: Flight Service DOWN");
@@ -105,9 +115,11 @@ public class BookingServiceImpl implements BookingService {
 
         b.setCancelled(true);
         bookingRepo.save(b);
+        bookingEventPublisher.publishBookingCancelled(b);
 
         flightClient.releaseSeats(b.getFlightId(),
                 new ReserveRequest(b.getNumberOfSeats()));
+
     }
 
     private TicketResponse toResponse(Booking b, FlightSearchResponse f) {
