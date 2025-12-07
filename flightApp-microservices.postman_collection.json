@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"airlineName\": \"Indigo\",\r\n  \"fromPlace\": \"Hyderabad\",\r\n  \"toPlace\": \"Bangalore\",\r\n  \"departureTime\": \"2025-12-10T10:00:00\",\r\n  \"arrivalTime\": \"2025-12-10T12:00:00\",\r\n  \"tripType\": \"ONE-WAY\",\r\n  \"priceOneWay\": 3500,\r\n  \"priceRoundTrip\": 0,\r\n  \"totalSeats\": 120\r\n}\r\n",
+					"raw": "{\r\n  \"airlineName\": \"Indigo\",\r\n  \"fromPlace\": \"Delhi\",\r\n  \"toPlace\": \"Hyderabad\",\r\n  \"departureTime\": \"2026-12-11T10:00:00\",\r\n  \"arrivalTime\": \"2026-12-11T12:00:00\",\r\n  \"tripType\": \"ONE-WAY\",\r\n  \"priceOneWay\": 3500,\r\n  \"priceRoundTrip\": 0,\r\n  \"totalSeats\": 120\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,40 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1.0/flight/airline/inventory/add",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1.0",
-						"flight",
-						"airline",
-						"inventory",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "adding flight",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"airlineName\": \"Indigo\",\r\n  \"fromPlace\": \"Chennai\",\r\n  \"toPlace\": \"Bangalore\",\r\n  \"departureTime\": \"2025-12-10T10:00:00\",\r\n  \"arrivalTime\": \"2025-12-10T12:00:00\",\r\n  \"tripType\": \"ONE-WAY\",\r\n  \"priceOneWay\": 3500,\r\n  \"priceRoundTrip\": 0,\r\n  \"totalSeats\": 120\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8084/api/v1.0/flight/airline/inventory/add",
+					"raw": "http://localhost:8084/api/flight/airline/inventory/add",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -62,7 +29,6 @@
 					"port": "8084",
 					"path": [
 						"api",
-						"v1.0",
 						"flight",
 						"airline",
 						"inventory",
@@ -87,7 +53,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/v1.0/flight/search",
+					"raw": "http://localhost:8084/api/flight/search",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -95,7 +61,6 @@
 					"port": "8084",
 					"path": [
 						"api",
-						"v1.0",
 						"flight",
 						"search"
 					]
@@ -109,7 +74,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/api/v1.0/flight/6930db8025b45b0fe4b8015d",
+					"raw": "http://localhost:8084/api/flight/693131a9b290ee4e47e0447a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -117,9 +82,8 @@
 					"port": "8084",
 					"path": [
 						"api",
-						"v1.0",
 						"flight",
-						"6930db8025b45b0fe4b8015d"
+						"693131a9b290ee4e47e0447a"
 					]
 				}
 			},
@@ -128,8 +92,30 @@
 		{
 			"name": "book by id",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\": \"Shivani\",\r\n  \"email\": \"shivani@gmail.com\",\r\n  \"numberOfSeats\": 2,\r\n  \"journeyDate\": \"2025-12-10\",\r\n  \"seatNumbers\": \"12A,12B\",\r\n  \"mealPreference\": \"VEG\",\r\n  \"passengers\": [\r\n    { \"name\": \"Sravya\", \"gender\": \"F\", \"age\": 21 },\r\n    { \"name\": \"Anu\", \"gender\": \"F\", \"age\": 22 }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/booking/6930cbd877157c2d5b251bf5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"booking",
+						"6930cbd877157c2d5b251bf5"
+					]
+				}
 			},
 			"response": []
 		},
@@ -139,7 +125,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/api/v1.0/booking/ticket/2FPISEYW",
+					"raw": "http://localhost:8084/api/booking/ticket/7WBAU7KZ",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -147,10 +133,9 @@
 					"port": "8084",
 					"path": [
 						"api",
-						"v1.0",
 						"booking",
 						"ticket",
-						"2FPISEYW"
+						"7WBAU7KZ"
 					]
 				}
 			},
@@ -160,7 +145,21 @@
 			"name": "history by email",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8084/api/booking/history/sravya@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"booking",
+						"history",
+						"sravya@gmail.com"
+					]
+				}
 			},
 			"response": []
 		},
